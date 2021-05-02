@@ -1,3 +1,6 @@
+pub mod currency;
+pub mod converter;
+
 #[cfg(test)]
 mod tests {
     #[test]
