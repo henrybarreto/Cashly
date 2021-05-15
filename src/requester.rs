@@ -1,7 +1,7 @@
 use crate::currency::Currency;
 use std::borrow::{Borrow, BorrowMut};
 use reqwest;
-use reqwest::{Response, Client, Method, RequestBuilder};
+use reqwest::{Response, Client, Method, RequestBuilder, StatusCode};
 use std::error::Error;
 
 /***
@@ -18,7 +18,7 @@ impl Requester {
     /***
         Making a request to the API with the `currency_source` as an argument
      */
-    pub async fn request_currency(&mut self, currency_source: String) -> Result<Response, reqwest::Error> {
+    pub async fn request_currency(&self, currency_source: String) -> Result<Response, reqwest::Error> {
         let requester = self.clone();
         let currency = currency_source.clone();
         let client = Client::new();
@@ -40,16 +40,18 @@ impl Requester {
 #[cfg(test)]
 mod requester_test {
     use crate::requester::Requester;
+    use reqwest::StatusCode;
 
     #[tokio::test]
-    async fn request_currency_tester() {
+    async fn request_currency_test() {
         let mut requester = Requester {
             api_key: "00A6F8AE-7797-4214-80F0-8D46F7CF5796".to_string(),
-            api_link: "http://rest-sandbox.coinapi.io/".to_string(),
+            api_link: "https://rest-sandbox.coinapi.io/".to_string(),
             api_link_path: "v1/exchangerate/".to_string()
         };
 
         let req = requester.request_currency("BTC".to_string()).await.unwrap();
-        println!("{:#?}", req.text().await.unwrap());
+
+        assert!(req.status().is_success());
     }
 }
