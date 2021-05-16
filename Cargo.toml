@@ -1,8 +1,8 @@
 [package]
 name = "Criptoly"
-description = "Currency converter tool"
+description = "This is a simple crate's lib to convert cryptocurrency values through APIs services."
 authors = ["Henry <contato@henrybarreto.dev>"]
-repository = "https://github.com/henrybarreto/Cashly"
+repository = "https://github.com/henrybarreto/Cryptoly"
 license = "MIT"
 version = "0.1.0"
 edition = "2018"
